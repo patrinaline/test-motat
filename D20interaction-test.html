@@ -34,9 +34,8 @@
 </head>
 <body>
 <div id="hint">Drag to rotate &middot; lit faces are open quests, tap one to open it
-    <button><a href="index.html">back </a></button>
+     <button><a href="index.html">back</a></button>
 </div>
-
 <div id="container"></div>
 <div id="toast"></div>
 <div id="panel">
@@ -53,10 +52,33 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 100);
 camera.position.set(0, 0, 5);
 
-const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+// ---- Pixel art look ----
+// The trick: render at a much lower internal resolution, then let the
+// browser scale the canvas up to fill the screen using nearest-neighbor
+// (no smoothing) instead of the usual smooth interpolation. Lower
+// PIXEL_SCALE = chunkier pixels.
+const PIXEL_SCALE = 6;
+
+const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
+renderer.setPixelRatio(1); // keep resolution low even on retina screens
 container.appendChild(renderer.domElement);
+
+const canvasEl = renderer.domElement;
+canvasEl.style.width = '100%';
+canvasEl.style.height = '100%';
+canvasEl.style.imageRendering = 'pixelated'; // Chrome/Edge/Firefox
+canvasEl.style.imageRendering = '-moz-crisp-edges'; // older Firefox fallback
+
+function setPixelResolution() {
+  const width = Math.floor(window.innerWidth / PIXEL_SCALE);
+  const height = Math.floor(window.innerHeight / PIXEL_SCALE);
+  // false = don't let three.js touch the canvas's CSS size, only its
+  // internal drawing buffer -- the CSS above handles the upscaling.
+  renderer.setSize(width, height, false);
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+}
+setPixelResolution();
 
 // Lighting -- one warm key light, one cool fill from behind
 scene.add(new THREE.AmbientLight(0xffffff, 0.5));
@@ -115,12 +137,15 @@ function makeNumberTexture(number) {
   canvas.width = size;
   canvas.height = size;
   const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingEnabled = false;
   ctx.fillStyle = '#f4f1ea';
   ctx.font = 'bold 64px system-ui, sans-serif';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.fillText(String(number), size / 2, size / 2 + 4);
   const texture = new THREE.CanvasTexture(canvas);
+  texture.magFilter = THREE.NearestFilter;
+  texture.minFilter = THREE.NearestFilter;
   texture.needsUpdate = true;
   return texture;
 }
@@ -248,11 +273,7 @@ function animate() {
 }
 animate();
 
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
-});
+window.addEventListener('resize', setPixelResolution);
 </script>
 </body>
 </html>
