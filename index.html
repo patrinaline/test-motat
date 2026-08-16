@@ -5,72 +5,38 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Inventions &amp; Innovations Hunt — prototype</title>
 <link rel="stylesheet" href="style.css">
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script type= "module" src="script.js"></script>
+<script src="script.js" defer></script>
+
 </head>
 <body>
 
-<div class="card">
-
-  <!-- Screen 1: intro -->
-  <div id="screen-intro">
-    <h1>Inventions &amp; Innovations Hunt</h1>
-    <p>No account needed. Pick a fun username and you're in — we'll remember you on this device.</p>
-    <button id="btn-start">Get started</button>
-    <a href="D20-test/D20interaction-test.html"><button>20-sided die</button></a>
-  </div>
-
-  <!-- Screen 2: username entry -->
-  <div id="screen-username" class="hidden">
-    <h1>Pick your username</h1>
-    <p>This is how you'll show up on the leaderboard. No real names needed.</p>
-    <input id="input-username" type="text" placeholder="e.g. Curious Inventor" maxlength="30">
-    <button id="btn-submit">Join the hunt</button>
-    <div class="status" id="status-username"></div>
-  </div>
-
-  <!-- Screen 3: confirmation / returning player -->
-  <div id="screen-welcome" class="hidden">
-    <h1 id="welcome-heading">You're in!</h1>
-    <p id="welcome-message"></p>
-    <div class="guid" id="welcome-guid"></div>
-    <button id="btn-find-exhibit" style="margin-top:16px;">Find an exhibit</button>
-    <button id="btn-reset" style="background:#4a473c; color:#f4f1ea;">
-      Forget me (demo reset)
-    </button>
-  </div>
-
-  <!-- Screen 4: exhibit picker -->
-  <!-- Standing in for "tap the hidden NFC tag / QR code" for demo
-       purposes -- picking from this dropdown is the same as scanning
-       an exhibit tag, since both just resolve to an exhibit_id. -->
-  <div id="screen-exhibit" class="hidden">
-    <h1>Find an exhibit</h1>
-    <p>In the real app this happens by tapping a hidden NFC tag or QR code. For this demo, just pick one to simulate the scan.</p>
-    <select id="select-exhibit"></select>
-    <button id="btn-enter-exhibit">Enter exhibit</button>
-    <div class="status" id="status-exhibit"></div>
-  </div>
-
-  <!-- Screen 5: the challenge itself -->
-  <div id="screen-challenge" class="hidden">
-    <h1 id="challenge-exhibit-name"></h1>
-    <p id="challenge-question"></p>
-    <input id="input-answer" type="text" placeholder="Type your answer">
-    <button id="btn-submit-answer">Submit answer</button>
-    <div class="status" id="status-challenge"></div>
-    <p id="challenge-score" style="font-size:12px; color:#8f8b7d;"></p>
-    <button id="btn-back-to-menu" style="background:#4a473c; color:#f4f1ea; margin-top:16px;">
-      Back to menu
-    </button>
-  </div>
-
+<div id="dev-fallback" style="display:none;">
+  <p>No card detected. Enter a GUID manually for testing:</p>
+  <input type="text" id="manual-guid-input" placeholder="e.g. test-123" />
+  <button id="manual-guid-submit">Use this GUID</button>
 </div>
 
-<!-- Supabase JS client, loaded from CDN -->
+<div id = "onboarding" class="hidden">
+  <div class="card">
+    <h1>Welcome!</h1>
+    <p>This is a new card. Pick a username to get started.</p>
+    <input type="text" id="username-input" placeholder="Enter a username" />
+    <button id="username-submit">Get Started</button>
+    <p class="status" id="onboarding-status"></p>
+  </div>
+</div>
+
+<div id="welcome-back" class="hidden">
+  <div class="card">
+    <h1>Welcome back!</h1>
+    <p id="welcome-message"></p>
+    <div id="progress-list"></div>
+  </div>
+</div>
 
 
 
-</script>
 </body>
 </html>
