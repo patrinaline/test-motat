@@ -1,8 +1,11 @@
 * { box-sizing: border-box; }
 
   body {
-    font-family: system-ui, sans-serif;
-    background: #1c1b19;
+    font-family: "Jersey 25", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 20px;
+    background: #15131E;
     color: #f4f1ea;
     display: flex;
     justify-content: center;
@@ -13,9 +16,7 @@
   }
 
   .card {
-    background: #26241f;
-    border: 1px solid #3a382f;
-    border-radius: 12px;
+    background: #12263A;
     padding: 32px;
     max-width: 380px;
     width: 100%;
@@ -23,20 +24,23 @@
   }
 
   h1 {
-    font-size: 20px;
+    font-size: 50px;
     margin: 0 0 12px;
   }
 
   p {
-    font-size: 14px;
+    font-size: 20px;
     color: #c8c4b8;
     line-height: 1.5;
   }
 
   input, select {
+    font-family: "Jersey 25", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     width: 100%;
     padding: 10px 12px;
-    font-size: 14px;
+    font-size: 20px;
     border-radius: 8px;
     border: 1px solid #4a473c;
     background: #1c1b19;
@@ -54,13 +58,16 @@
   }
 
   button {
+    font-family: "Jersey 25", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     width: 100%;
     padding: 10px 12px;
-    font-size: 14px;
+    font-size: 20px;
     font-weight: 600;
     border-radius: 8px;
     border: none;
-    background: #d97757;
+    background: #F9C22E;
     color: #1c1b19;
     cursor: pointer;
     margin-top: 8px;
@@ -72,16 +79,18 @@
   }
 
   .guid {
-    font-family: monospace;
+    font-family: "Jersey 25", sans-serif;
+    font-weight: 400;
+    font-style: normal;
     font-size: 12px;
-    color: #8f8b7d;
+    color: #211d0d;
     word-break: break-all;
     margin-top: 12px;
   }
 
   .status {
     font-size: 13px;
-    color: #d97757;
+    color: #F9C22E;
     min-height: 18px;
     margin-top: 8px;
   }
